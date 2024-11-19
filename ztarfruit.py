@@ -3,6 +3,7 @@
 #Utility to sort through output from IRRDBU00 and create reports in various formats
 
 from zoautil_py import datasets
+from dataclasses import dataclass
 from datetime import datetime
 import os
 import json
@@ -33,6 +34,21 @@ database_settings = settings["database"]
 
 #Database name
 database_name = database_settings["name"]
+#Create/connect to database
 con = sqlite3.connect(f"{database_name}.db")
 
 db_cursor = con.cursor()
+
+class Record:
+    def __init__(self: str,identifier: str, fields: list):
+        self.name = name
+        self.identifier = identifier
+
+@dataclass
+class Field:
+    name: str
+    start: int
+    end: int
+
+    def get_range(self):
+        return (self.start, self.end)
