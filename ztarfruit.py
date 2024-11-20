@@ -1,6 +1,6 @@
 #Zstarfruit for RACF
 #Dependencies: Python >=3.12.x and >=ZOAU 1.3.x
-#Utility to sort through output from IRRDBU00 and create reports in various formats
+#Utility to parse output from IRRDBU00 and offer the data through an API
 
 from zoautil_py import datasets
 from dataclasses import dataclass
