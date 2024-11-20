@@ -1,19 +1,20 @@
 #Zstarfruit for RACF
 #Dependencies: Python >=3.12.x and >=ZOAU 1.3.x
-#Utility to sort through output from IRRDBU00 and create reports in various formats
+#Utility to parse output from IRRDBU00 and offer the data through an API
 
 from zoautil_py import datasets
+from dataclasses import dataclass
 from datetime import datetime
 import os
 import json
 import tomllib
 import re
 import argparse
-import sqlite3
+import sqlalchemy 
 
 parser = argparse.ArgumentParser(
     prog='Ztarfruit for RACF',
-    description='Utility to sort through output from IRRDBU100 and create json output',
+    description='Utility to sort through output from IRRDBU100 and serve it through an API',
 )
 
 #Flags and arguments to specify in the command line
@@ -25,14 +26,27 @@ now = datetime.now() # current date and time
 date_time = now.strftime("d-%m-%d-%Y-t-%H-%M-%S")
 log_name = f"ztarfruit_{date_time}_"
 
-#load settings from razz.toml
+#load settings from zfruit.toml
 with open("zfruit.toml", "rb") as f:
     settings = tomllib.load(f)
 
-database_settings = settings["database"]
+data_settings = settings["data"]
+output_settings = settings["output"]
 
-#Database name
-database_name = database_settings["name"]
-con = sqlite3.connect(f"{database_name}.db")
+#Input dataset to parse
+input_dataset = args.input or data_settings["input_dataset"]
 
-db_cursor = con.cursor()
+class Record:
+    def __init__(self: str,identifier: str, fields: list):
+        self.name = name
+        self.identifier = identifier
+        self.fields = fields
+
+@dataclass
+class Field:
+    name: str
+    start: int
+    end: int
+
+    def get_range(self):
+        return (self.start, self.end)
