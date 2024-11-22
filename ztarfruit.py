@@ -11,11 +11,12 @@ import tomllib
 import re
 import argparse
 import sqlalchemy 
-from enum import Enum
 
 parser = argparse.ArgumentParser(
     prog='Ztarfruit for RACF',
-    description='Utility to sort through output from IRRDBU100 and serve it through an API',
+    description=
+    'Utility to sort through output from IRRDBU100 and serve it through an API'
+    ,
 )
 
 #Flags and arguments to specify in the command line
@@ -44,6 +45,10 @@ class Record:
         self.name = name
         self.identifier = identifier
         self.fields = fields
+
+records = [
+    Record()
+]
 
 class DataType(Enum):
     Char = 1
