@@ -11,6 +11,7 @@ import tomllib
 import re
 import argparse
 import sqlalchemy 
+from enum import Enum
 
 parser = argparse.ArgumentParser(
     prog='Ztarfruit for RACF',
