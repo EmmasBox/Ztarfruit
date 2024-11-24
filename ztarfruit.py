@@ -22,7 +22,7 @@ parser = argparse.ArgumentParser(
 
 #Flags and arguments to specify in the command line
 parser.add_argument('-i', '--input')
-parser.add_argument('-r', '--reset')
+parser.add_argument('-r', '--reset', action='store_true')
 parser.add_argument('-o', '--obfuscate', action='store_true')
 
 args = parser.parse_args()
@@ -64,3 +64,10 @@ class Field:
 
     def get_range(self):
         return (self.start, self.end)
+    
+#This function loads in the IRRDBU00 output
+def load_input():
+    if input_dataset != "":
+        if datasets.exists(input_dataset):
+            print("Target dataset exists")
+            return datasets.read(input_dataset)
