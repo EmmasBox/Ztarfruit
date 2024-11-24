@@ -42,7 +42,7 @@ output_settings = settings["output"]
 input_dataset = args.input or data_settings["input_dataset"]
 
 class Record:
-    """defines a record type that can be parsed, i.e. Group basic data record, 0100"""
+    """Defines a record type that can be parsed, i.e. Group basic data record, 0100"""
     def __init__(self,name: str,identifier: str, fields: list):
         self.name = name
         self.identifier = identifier
@@ -56,6 +56,7 @@ class DataType(Enum):
 
 @dataclass
 class Field:
+    """The field class is used when defining a record type, it specifies when a field starts and ends"""
     name: str
     data_type: DataType
     start: int
