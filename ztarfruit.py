@@ -10,7 +10,7 @@ import json
 import tomllib
 import re
 import argparse
-import sqlalchemy 
+import sqlalchemy
 from enum import Enum
 
 parser = argparse.ArgumentParser(
@@ -65,9 +65,12 @@ class Field:
     def get_range(self):
         return (self.start, self.end)
     
-#This function loads in the IRRDBU00 output
+#This function loads in the IRRDBU00 output, internal function please ignore
 def load_input():
-    if input_dataset != "":
-        if datasets.exists(input_dataset):
-            print("Target dataset exists")
-            return datasets.read(input_dataset)
+    if datasets.exists(input_dataset):
+        print("Target dataset exists")
+        output = datasets.read(input_dataset)
+        return output
+        
+if input_dataset != "":
+    output = load_input()
