@@ -73,4 +73,15 @@ def load_input():
         return output
         
 if input_dataset != "":
-    output = load_input()
+    dataset_contents = load_input()
+    input_path = "./temp.txt"
+
+    #remove input data in case the utility has been ran before
+    if os.path.exists(input_path):
+        os.remove(input_path)
+
+    rInput = open(input_path, "a")
+    rInput.write(dataset_contents)
+    rInput.close()
+    print(f"Temp file size: {os.path.getsize(input_path)} bytes")
+    
