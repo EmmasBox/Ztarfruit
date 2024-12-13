@@ -1,9 +1,8 @@
-#Zstarfruit for RACF
+#Ztarfruit for RACF
 #Dependencies: Python >=3.12.x and >=ZOAU 1.3.x
 #Utility to parse output from IRRDBU00 and offer the data through an API
 
 from zoautil_py import datasets
-from dataclasses import dataclass
 from datetime import datetime
 import os
 import json
@@ -11,7 +10,7 @@ import tomllib
 import re
 import argparse
 import sqlalchemy
-from enum import Enum
+from records import database_records
 
 parser = argparse.ArgumentParser(
     prog='Ztarfruit for RACF',
@@ -40,30 +39,6 @@ output_settings = settings["output"]
 
 #Input dataset to parse
 input_dataset = args.input or data_settings["input_dataset"]
-
-class Record:
-    """Defines a record type that can be parsed, i.e. Group basic data record, 0100"""
-    def __init__(self,name: str,identifier: str, fields: list):
-        self.name = name
-        self.identifier = identifier
-        self.fields = fields
-
-class DataType(Enum):
-    Char = 1
-    Int = 2
-    Date = 3
-    Time = 4
-
-@dataclass
-class Field:
-    """The field class is used when defining a record type, it specifies when a field starts and ends"""
-    name: str
-    data_type: DataType
-    start: int
-    end: int
-
-    def get_range(self):
-        return (self.start, self.end)
     
 #This function loads in the IRRDBU00 output, internal function please ignore
 def load_input():
@@ -71,6 +46,8 @@ def load_input():
         print("Target dataset exists")
         output = datasets.read(input_dataset)
         return output
+    else:
+        return ""
         
 if input_dataset != "":
     dataset_contents = load_input()
